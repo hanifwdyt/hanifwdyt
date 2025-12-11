@@ -57,7 +57,7 @@ export const markdownComponents: Components = {
 
   // Images - Next.js optimized
   img: ({ src, alt }) => {
-    if (!src) return null;
+    if (!src || typeof src !== 'string') return null;
 
     return (
       <span className="block my-8">
