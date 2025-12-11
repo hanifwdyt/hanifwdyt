@@ -1,64 +1,103 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { bio, currentlyListening, socialLinks } from './data';
+import { getAllWriting } from '@/lib/content';
 
 export default function Home() {
+  const writing = getAllWriting();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-bg-primary">
+      <main className="mx-auto max-w-[680px] px-6 py-16 sm:py-24">
+
+        {/* Header */}
+        <header className="mb-20">
+          <h1 className="text-base font-medium text-text-primary mb-5">
+            {bio.name}
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xs text-text-secondary max-w-md" style={{ lineHeight: '1.7' }}>
+            I document my{' '}
+            <Link href="/journey" className="text-text-primary underline decoration-border hover:decoration-text-tertiary underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm">
+              journey
+            </Link>
+            {' '}and{' '}
+            <Link href="/beliefs" className="text-text-primary underline decoration-border hover:decoration-text-tertiary underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm">
+              beliefs
+            </Link>
+            {' '}to stay grounded. Working as a{' '}
+            <Link href="/experience" className="text-text-primary underline decoration-border hover:decoration-text-tertiary underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm">
+              developer
+            </Link>
+            , writing when things catch my eye,{' '}
+            <Link href="/reading" className="text-text-primary underline decoration-border hover:decoration-text-tertiary underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm">
+              reading
+            </Link>
+            {' '}often, and building{' '}
+            <Link href="/projects" className="text-text-primary underline decoration-border hover:decoration-text-tertiary underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm">
+              projects
+            </Link>
+            {' '}on the side.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        </header>
+
+        {/* Writing */}
+        <section className="mb-16">
+          <h2 className="text-xs text-text-tertiary mb-4 tracking-wide">Writing</h2>
+          <div className="space-y-2 mb-4">
+            {writing.slice(0, 5).map((post) => (
+              <Link
+                key={post.slug}
+                href={`/writing/${post.slug}`}
+                className="flex gap-4 text-xs group py-1 -mx-1 px-1 rounded hover:bg-bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary"
+              >
+                <span className="text-text-tertiary w-16 shrink-0 tabular-nums">
+                  {new Date(post.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                </span>
+                <span className="text-text-secondary group-hover:text-text-primary">
+                  {post.title}
+                </span>
+              </Link>
+            ))}
+          </div>
+          <Link
+            href="/writing"
+            className="inline-block text-xs text-text-secondary hover:text-text-primary py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+            → See all writing
+          </Link>
+        </section>
+
+        {/* Currently Listening */}
+        <section className="mb-16">
+          <h2 className="text-xs text-text-tertiary mb-4 tracking-wide">Currently listening to</h2>
+          <div className="space-y-2">
+            {currentlyListening.map((song, i) => (
+              <div key={i} className="text-xs text-text-secondary py-1">
+                <span className="text-text-primary">{song.title}</span>
+                <span className="text-text-tertiary"> — {song.artist}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Connect */}
+        <footer className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-text-secondary">
+          {socialLinks.map((link, index) => (
+            <span key={link.name} className="flex items-center gap-3">
+              <a
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm"
+              >
+                {link.name}
+              </a>
+              {index < socialLinks.length - 1 && (
+                <span className="text-border">·</span>
+              )}
+            </span>
+          ))}
+        </footer>
+
       </main>
     </div>
   );
