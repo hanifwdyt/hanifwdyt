@@ -1,16 +1,40 @@
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { getBeliefs } from '@/lib/content';
-import { markdownComponents } from '@/app/components/MarkdownComponents';
 
 export const metadata = {
   title: "Beliefs - Hanif Tri Widiyanto",
   description: "Things I believe in",
 };
 
+function parseBeliefs(content: string) {
+  const lines = content.split('\n').filter(line => line.trim());
+  const beliefs = [];
+  let currentBelief: { title: string; points: string[] } | null = null;
+
+  for (const line of lines) {
+    if (line.startsWith('## ')) {
+      if (currentBelief) {
+        beliefs.push(currentBelief);
+      }
+      currentBelief = {
+        title: line.replace('## ', ''),
+        points: []
+      };
+    } else if (line.startsWith('- ') && currentBelief) {
+      currentBelief.points.push(line.replace('- ', ''));
+    }
+  }
+
+  if (currentBelief) {
+    beliefs.push(currentBelief);
+  }
+
+  return beliefs;
+}
+
 export default function Beliefs() {
-  const beliefs = getBeliefs();
+  const data = getBeliefs();
+  const beliefs = parseBeliefs(data.content);
 
   return (
     <div className="min-h-screen bg-bg-primary">
@@ -25,21 +49,29 @@ export default function Beliefs() {
 
         <header className="mb-10">
           <h1 className="text-base font-medium text-text-primary mb-3">
-            {beliefs.title}
+            Things I believe
           </h1>
           <p className="text-xs text-text-secondary">
-            {beliefs.description}
+            Principles that guide how I work and think
           </p>
         </header>
 
-        <article className="prose prose-sm max-w-none">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={markdownComponents}
-          >
-            {beliefs.content}
-          </ReactMarkdown>
-        </article>
+        <div className="space-y-8">
+          {beliefs.map((belief, i) => (
+            <div key={i}>
+              <h2 className="text-sm font-medium text-text-primary mb-3">
+                {belief.title}
+              </h2>
+              <ul className="space-y-1.5">
+                {belief.points.map((point, j) => (
+                  <li key={j} className="text-xs text-text-secondary leading-relaxed pl-3 relative before:content-['▪'] before:absolute before:left-0 before:text-text-tertiary">
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </main>
     </div>
   );

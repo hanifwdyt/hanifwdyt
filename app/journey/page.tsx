@@ -1,16 +1,40 @@
 import Link from 'next/link';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import { getJourney } from '@/lib/content';
-import { markdownComponents } from '@/app/components/MarkdownComponents';
 
 export const metadata = {
   title: "Journey - Hanif Tri Widiyanto",
   description: "My journey from 2016 to present",
 };
 
+function parseJourney(content: string) {
+  const lines = content.split('\n').filter(line => line.trim());
+  const journey = [];
+  let currentYear = { year: '', events: [] as string[] };
+
+  for (const line of lines) {
+    if (line.startsWith('## ')) {
+      if (currentYear.year) {
+        journey.push(currentYear);
+      }
+      currentYear = {
+        year: line.replace('## ', ''),
+        events: []
+      };
+    } else if (line.startsWith('- ') && currentYear.year) {
+      currentYear.events.push(line.replace('- ', ''));
+    }
+  }
+
+  if (currentYear.year) {
+    journey.push(currentYear);
+  }
+
+  return journey;
+}
+
 export default function Journey() {
-  const journey = getJourney();
+  const data = getJourney();
+  const journey = parseJourney(data.content);
 
   return (
     <div className="min-h-screen bg-bg-primary">
@@ -25,21 +49,27 @@ export default function Journey() {
 
         <header className="mb-10">
           <h1 className="text-base font-medium text-text-primary mb-3">
-            {journey.title}
+            Journey
           </h1>
           <p className="text-xs text-text-secondary">
-            {journey.description}
+            A timeline of key moments
           </p>
         </header>
 
-        <article className="prose prose-sm max-w-none">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={markdownComponents}
-          >
-            {journey.content}
-          </ReactMarkdown>
-        </article>
+        <div className="space-y-6">
+          {journey.map((item, i) => (
+            <div key={i} className="flex gap-4 text-xs">
+              <span className="text-text-tertiary w-10 shrink-0 tabular-nums font-medium">{item.year}</span>
+              <ul className="space-y-1.5 flex-1">
+                {item.events.map((event, j) => (
+                  <li key={j} className="text-text-secondary leading-relaxed">
+                    {event}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </main>
     </div>
   );
