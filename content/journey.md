@@ -38,3 +38,4 @@ description: "The path so far"
 ## 2025
 - Learning infrastructure
 - Training for half marathon 2026
+- Did first Aquathlon 1+5

@@ -41,26 +41,26 @@ export default function Journey() {
       <main className="mx-auto max-w-[680px] px-6 py-16 sm:py-24">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 text-xs text-text-secondary hover:text-text-primary mb-10 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm"
+          className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-text-primary mb-10 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm"
         >
           <span>←</span>
           <span>Back</span>
         </Link>
 
-        <header className="mb-10">
-          <h1 className="text-base font-medium text-text-primary mb-3">
+        <header className="mb-12">
+          <h1 className="text-xl font-medium text-text-primary mb-4">
             Journey
           </h1>
-          <p className="text-xs text-text-secondary">
-            A timeline of key moments
+          <p className="text-sm text-text-secondary leading-relaxed">
+           The path so far
           </p>
         </header>
 
-        <div className="space-y-6">
+        <div className="space-y-8">
           {journey.map((item, i) => (
-            <div key={i} className="flex gap-4 text-xs">
-              <span className="text-text-tertiary w-10 shrink-0 tabular-nums font-medium">{item.year}</span>
-              <ul className="space-y-1.5 flex-1">
+            <div key={i} className="flex gap-6 text-sm">
+              <span className="text-text-tertiary w-12 shrink-0 tabular-nums font-medium">{item.year}</span>
+              <ul className="space-y-2 flex-1">
                 {item.events.map((event, j) => (
                   <li key={j} className="text-text-secondary leading-relaxed">
                     {event}

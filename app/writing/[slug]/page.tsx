@@ -56,7 +56,7 @@ export default async function WritingPost({ params }: Props) {
           <h1 className="text-base font-medium text-text-primary mb-3">
             {post.title}
           </h1>
-          <div className="flex items-center gap-2 text-xs text-text-tertiary">
+          <div className="flex items-center gap-2 text-base text-text-tertiary">
             <time className="tabular-nums">
               {new Date(post.date).toLocaleDateString('en-US', {
                 month: 'short',

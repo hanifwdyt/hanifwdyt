@@ -14,31 +14,31 @@ export const markdownComponents: Components = {
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="text-xs font-medium text-text-primary mt-6 mb-2">
+    <h3 className="text-sm font-medium text-text-primary mt-6 mb-2">
       {children}
     </h3>
   ),
 
   // Paragraphs
   p: ({ children }) => (
-    <p className="text-xs text-text-secondary mb-5" style={{ lineHeight: '1.7' }}>
+    <p className="text-sm text-text-secondary mb-5" style={{ lineHeight: '1.7' }}>
       {children}
     </p>
   ),
 
   // Lists
   ul: ({ children }) => (
-    <ul className="list-disc list-inside text-xs text-text-secondary mb-5 space-y-1.5" style={{ lineHeight: '1.7' }}>
+    <ul className="list-disc list-inside text-sm text-text-secondary mb-5 space-y-1.5" style={{ lineHeight: '1.7' }}>
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="list-decimal list-inside text-xs text-text-secondary mb-5 space-y-1.5" style={{ lineHeight: '1.7' }}>
+    <ol className="list-decimal list-inside text-sm text-text-secondary mb-5 space-y-1.5" style={{ lineHeight: '1.7' }}>
       {children}
     </ol>
   ),
   li: ({ children }) => (
-    <li className="text-xs text-text-secondary">
+    <li className="text-sm text-text-secondary">
       {children}
     </li>
   ),

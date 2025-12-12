@@ -70,29 +70,29 @@ export default function Reading() {
       <main className="mx-auto max-w-[680px] px-6 py-16 sm:py-24">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 text-xs text-text-secondary hover:text-text-primary mb-10 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm"
+          className="inline-flex items-center gap-1 text-sm text-text-secondary hover:text-text-primary mb-10 py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-text-tertiary focus-visible:ring-offset-2 rounded-sm"
         >
           <span>←</span>
           <span>Back</span>
         </Link>
 
-        <header className="mb-10">
-          <h1 className="text-base font-medium text-text-primary mb-3">
+        <header className="mb-12">
+          <h1 className="text-xl font-medium text-text-primary mb-4">
             Reading
           </h1>
-          <p className="text-xs text-text-secondary">
+          <p className="text-sm text-text-secondary leading-relaxed">
             Books I've read over the years
           </p>
         </header>
 
-        <div className="space-y-8">
+        <div className="space-y-10">
           {years.map((year) => (
             <div key={year}>
-              <h2 className="text-xs text-text-tertiary mb-3 tracking-wide tabular-nums">{year}</h2>
-              <div className="space-y-2">
+              <h2 className="text-sm text-text-tertiary mb-4 tracking-wide tabular-nums font-medium">{year}</h2>
+              <div className="space-y-2.5">
                 {booksByYear[year].map((book, i) => (
-                  <div key={i} className="text-xs text-text-secondary py-1">
-                    <span className="text-text-primary">{book.title}</span>
+                  <div key={i} className="text-sm text-text-secondary py-1 leading-relaxed">
+                    <span className="text-text-primary font-medium">{book.title}</span>
                     <span className="text-text-secondary"> — {book.author}</span>
                   </div>
                 ))}
@@ -102,12 +102,12 @@ export default function Reading() {
         </div>
 
         {currentlyListening.length > 0 && (
-          <section className="mt-12">
-            <h2 className="text-xs text-text-tertiary mb-3 tracking-wide">Currently listening to</h2>
-            <div className="space-y-2">
+          <section className="mt-16">
+            <h2 className="text-sm text-text-tertiary mb-4 tracking-wide font-medium">Currently listening to</h2>
+            <div className="space-y-2.5">
               {currentlyListening.map((song, i) => (
-                <div key={i} className="text-xs text-text-secondary py-1">
-                  <span className="text-text-primary">{song.title}</span>
+                <div key={i} className="text-sm text-text-secondary py-1 leading-relaxed">
+                  <span className="text-text-primary font-medium">{song.title}</span>
                   <span className="text-text-tertiary"> — {song.artist}</span>
                 </div>
               ))}
