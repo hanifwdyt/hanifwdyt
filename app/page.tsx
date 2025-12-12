@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { bio, currentlyListening, socialLinks } from './data';
+import { bio, socialLinks } from './data';
 import { getAllWriting } from '@/lib/content';
 
 export default function Home() {
@@ -64,19 +64,6 @@ export default function Home() {
           >
             → See all writing
           </Link>
-        </section>
-
-        {/* Currently Listening */}
-        <section className="mb-16">
-          <h2 className="text-xs text-text-tertiary mb-4 tracking-wide">Currently listening to</h2>
-          <div className="space-y-2">
-            {currentlyListening.map((song, i) => (
-              <div key={i} className="text-xs text-text-secondary py-1">
-                <span className="text-text-primary">{song.title}</span>
-                <span className="text-text-tertiary"> — {song.artist}</span>
-              </div>
-            ))}
-          </div>
         </section>
 
         {/* Connect */}

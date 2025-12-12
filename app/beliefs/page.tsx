@@ -1,5 +1,8 @@
 import Link from 'next/link';
-import { beliefs } from '../data';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { getBeliefs } from '@/lib/content';
+import { markdownComponents } from '@/app/components/MarkdownComponents';
 
 export const metadata = {
   title: "Beliefs - Hanif Tri Widiyanto",
@@ -7,6 +10,8 @@ export const metadata = {
 };
 
 export default function Beliefs() {
+  const beliefs = getBeliefs();
+
   return (
     <div className="min-h-screen bg-bg-primary">
       <main className="mx-auto max-w-[680px] px-6 py-16 sm:py-24">
@@ -20,29 +25,21 @@ export default function Beliefs() {
 
         <header className="mb-10">
           <h1 className="text-base font-medium text-text-primary mb-3">
-            Things I believe
+            {beliefs.title}
           </h1>
           <p className="text-xs text-text-secondary">
-            Principles that guide how I work and think
+            {beliefs.description}
           </p>
         </header>
 
-        <div className="space-y-8">
-          {beliefs.map((belief, i) => (
-            <div key={i}>
-              <h2 className="text-sm font-medium text-text-primary mb-3">
-                {belief.title}
-              </h2>
-              <ul className="space-y-1.5">
-                {belief.points.map((point, j) => (
-                  <li key={j} className="text-xs text-text-secondary leading-relaxed pl-3 relative before:content-['▪'] before:absolute before:left-0 before:text-text-tertiary">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <article className="prose prose-sm max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={markdownComponents}
+          >
+            {beliefs.content}
+          </ReactMarkdown>
+        </article>
       </main>
     </div>
   );

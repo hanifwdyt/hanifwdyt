@@ -1,5 +1,8 @@
 import Link from 'next/link';
-import { experience } from '../data';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { getExperience } from '@/lib/content';
+import { markdownComponents } from '@/app/components/MarkdownComponents';
 
 export const metadata = {
   title: "Developer Experience - Hanif Tri Widiyanto",
@@ -7,6 +10,8 @@ export const metadata = {
 };
 
 export default function Experience() {
+  const experience = getExperience();
+
   return (
     <div className="min-h-screen bg-bg-primary">
       <main className="mx-auto max-w-[680px] px-6 py-16 sm:py-24">
@@ -20,21 +25,21 @@ export default function Experience() {
 
         <header className="mb-10">
           <h1 className="text-base font-medium text-text-primary mb-3">
-            Developer experience
+            {experience.title}
           </h1>
           <p className="text-xs text-text-secondary">
-            Technologies and contexts I work with
+            {experience.description}
           </p>
         </header>
 
-        <div className="space-y-2">
-          {experience.map((item, i) => (
-            <div key={i} className="flex gap-4 text-xs py-1">
-              <span className="text-text-primary w-32 shrink-0">{item.tech}</span>
-              <span className="text-text-secondary">{item.context}</span>
-            </div>
-          ))}
-        </div>
+        <article className="prose prose-sm max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={markdownComponents}
+          >
+            {experience.content}
+          </ReactMarkdown>
+        </article>
       </main>
     </div>
   );

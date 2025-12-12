@@ -1,5 +1,8 @@
 import Link from 'next/link';
-import { books } from '../data';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { getReading } from '@/lib/content';
+import { markdownComponents } from '@/app/components/MarkdownComponents';
 
 export const metadata = {
   title: "Reading - Hanif Tri Widiyanto",
@@ -7,17 +10,7 @@ export const metadata = {
 };
 
 export default function Reading() {
-  // Group books by year
-  const booksByYear = books.reduce((acc, book) => {
-    if (!acc[book.year]) {
-      acc[book.year] = [];
-    }
-    acc[book.year].push(book);
-    return acc;
-  }, {} as Record<string, typeof books>);
-
-  // Sort years descending
-  const years = Object.keys(booksByYear).sort((a, b) => parseInt(b) - parseInt(a));
+  const reading = getReading();
 
   return (
     <div className="min-h-screen bg-bg-primary">
@@ -32,28 +25,21 @@ export default function Reading() {
 
         <header className="mb-10">
           <h1 className="text-base font-medium text-text-primary mb-3">
-            Reading
+            {reading.title}
           </h1>
           <p className="text-xs text-text-secondary">
-            Books I've read over the years
+            {reading.description}
           </p>
         </header>
 
-        <div className="space-y-8">
-          {years.map((year) => (
-            <div key={year}>
-              <h2 className="text-xs text-text-tertiary mb-3 tracking-wide tabular-nums">{year}</h2>
-              <div className="space-y-2">
-                {booksByYear[year].map((book, i) => (
-                  <div key={i} className="text-xs text-text-secondary py-1">
-                    <span className="text-text-primary">{book.title}</span>
-                    <span className="text-text-secondary"> — {book.author}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <article className="prose prose-sm max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={markdownComponents}
+          >
+            {reading.content}
+          </ReactMarkdown>
+        </article>
       </main>
     </div>
   );

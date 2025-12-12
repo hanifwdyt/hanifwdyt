@@ -1,5 +1,8 @@
 import Link from 'next/link';
-import { journey } from '../data';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { getJourney } from '@/lib/content';
+import { markdownComponents } from '@/app/components/MarkdownComponents';
 
 export const metadata = {
   title: "Journey - Hanif Tri Widiyanto",
@@ -7,6 +10,8 @@ export const metadata = {
 };
 
 export default function Journey() {
+  const journey = getJourney();
+
   return (
     <div className="min-h-screen bg-bg-primary">
       <main className="mx-auto max-w-[680px] px-6 py-16 sm:py-24">
@@ -20,27 +25,21 @@ export default function Journey() {
 
         <header className="mb-10">
           <h1 className="text-base font-medium text-text-primary mb-3">
-            Journey
+            {journey.title}
           </h1>
           <p className="text-xs text-text-secondary">
-            A timeline of key moments
+            {journey.description}
           </p>
         </header>
 
-        <div className="space-y-6">
-          {journey.map((item, i) => (
-            <div key={i} className="flex gap-4 text-xs">
-              <span className="text-text-tertiary w-10 shrink-0 tabular-nums font-medium">{item.year}</span>
-              <ul className="space-y-1.5 flex-1">
-                {item.events.map((event, j) => (
-                  <li key={j} className="text-text-secondary leading-relaxed">
-                    {event}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+        <article className="prose prose-sm max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={markdownComponents}
+          >
+            {journey.content}
+          </ReactMarkdown>
+        </article>
       </main>
     </div>
   );

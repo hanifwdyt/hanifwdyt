@@ -98,3 +98,51 @@ export function getProjectBySlug(slug: string): Project | null {
     return null;
   }
 }
+
+export function getBeliefs() {
+  const fullPath = path.join(contentDirectory, 'beliefs.md');
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
+
+  return {
+    title: data.title,
+    description: data.description,
+    content,
+  };
+}
+
+export function getExperience() {
+  const fullPath = path.join(contentDirectory, 'experience.md');
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
+
+  return {
+    title: data.title,
+    description: data.description,
+    content,
+  };
+}
+
+export function getJourney() {
+  const fullPath = path.join(contentDirectory, 'journey.md');
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
+
+  return {
+    title: data.title,
+    description: data.description,
+    content,
+  };
+}
+
+export function getReading() {
+  const fullPath = path.join(contentDirectory, 'reading.md');
+  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const { data, content } = matter(fileContents);
+
+  return {
+    title: data.title,
+    description: data.description,
+    content,
+  };
+}
